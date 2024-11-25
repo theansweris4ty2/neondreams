@@ -1,0 +1,25 @@
+{{define "header"}}
+<header>
+    <!-- Navigation bar -->
+  {{template "navbar"}}
+    <!-- Hero section with background image, heading, subheading and button -->
+    <div
+      class="relative h-[350px] overflow-hidden bg-[url('/assets/tron.jpg')] bg-cover bg-[50%] bg-no-repeat">
+      <div
+        class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-black/60 bg-fixed">
+        <div class="flex h-full items-center justify-center">
+          <div class="px-6 text-center text-white md:px-12">
+            <h1 class="mb-6 text-5xl font-bold">NeonDreams</h1>
+            <h3 class="mb-8 text-3xl font-bold">Escape the Mundane</h3>
+            <!-- <button
+              type="button"
+              class="inline-block w-full rounded bg-pink-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:bg-pink-500 shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+      data-twe-ripple-init
+      data-twe-ripple-color="light">              Call to action
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {{end}}

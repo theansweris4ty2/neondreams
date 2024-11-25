@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nerdigarchy</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-300 content-center">
+    {{template "header"}}
+    <div class="grid grid-cols-2">
+        <div class="inline-block w-full rounded bg-stone-300 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white">
+        <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+        {{range .Films}}
+        <li class="inline-block w-full rounded bg-pink-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white">
+            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-black">
+                    {{.Title}} - {{.Director}}
+                </p>
+                </div>
+            </li>
+        {{end}}
+        </ul>
+        </div>
+        <div>
+        {{template "form"}}
+        </div>
+    </div>
+    {{template "footer"}}   
+</body>
+</html>
