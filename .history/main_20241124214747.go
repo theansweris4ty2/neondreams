@@ -11,18 +11,14 @@ import (
 var tpl *template.Template
 
 func main() {
-	var secondMovie = Movie{"Star Wars", "George Lucas"}
 
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/add-film/", formHandler)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
-	http.ListenAndServe(":8080", nil)
-	db := openDb()
+	db := dbOpen()
+
 	createMovieTable(db)
-	pk := insertMovie(db, secondMovie)
-	fmt.Printf("Id = %d", pk)
-	getMovie(db, pk)
 
 }
 func homeHandler(w http.ResponseWriter, r *http.Request) {

@@ -17,12 +17,12 @@ func main() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/add-film/", formHandler)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":5342", nil)
 	db := openDb()
 	createMovieTable(db)
-	pk := insertMovie(db, secondMovie)
-	fmt.Printf("Id = %d", pk)
-	getMovie(db, pk)
+	// pk := insertMovie(db, secondMovie)
+	// fmt.Printf("Id = %d", pk)
+	// getMovie(db, pk)
 
 }
 func homeHandler(w http.ResponseWriter, r *http.Request) {

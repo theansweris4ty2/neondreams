@@ -1,8 +1,10 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 
 	_ "github.com/lib/pq"
@@ -11,18 +13,22 @@ import (
 var tpl *template.Template
 
 func main() {
-	var secondMovie = Movie{"Star Wars", "George Lucas"}
-
+	connStr := "postgres://user:babbage@localhost:8080/neondreams?sslmode=disable"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	if err = db.Ping(); err != nil {
+		log.Fatal(err)
+	}
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/add-film/", formHandler)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
-	http.ListenAndServe(":8080", nil)
-	db := openDb()
+	http.ListenAndServe(":5342", nil)
+
 	createMovieTable(db)
-	pk := insertMovie(db, secondMovie)
-	fmt.Printf("Id = %d", pk)
-	getMovie(db, pk)
 
 }
 func homeHandler(w http.ResponseWriter, r *http.Request) {

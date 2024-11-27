@@ -8,7 +8,7 @@ import (
 )
 
 func dbOpen() {
-	connStr := "postgres://postgres:babbage@localhost:8080/neondreams?sslmode=disable"
+	connStr := "postgres://user:babbage@localhost:8080/neondreams?sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
