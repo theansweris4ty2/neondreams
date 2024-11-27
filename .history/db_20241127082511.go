@@ -20,6 +20,7 @@ func openDb() *sql.DB {
 	if err != nil {
 		fmt.Printf("there was an error %v", err)
 	}
+	defer db.Close()
 	err = db.Ping()
 	if err != nil {
 		fmt.Printf("There was an error: %v", err)

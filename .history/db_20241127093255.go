@@ -29,6 +29,8 @@ func openDb() *sql.DB {
 }
 
 func createMovieTable(db *sql.DB) {
+	openDb()
+	defer db.Close()
 	query := `CREATE TABLE IF NOT EXISTS movie(
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
@@ -42,6 +44,8 @@ func createMovieTable(db *sql.DB) {
 	}
 }
 func insertMovie(db *sql.DB, movie Movie) int {
+	// openDb()
+	// defer db.Close()
 	query := `INSERT INTO movie (name, director)
 	VALUES($1, $2) RETURNING id`
 
@@ -53,6 +57,8 @@ func insertMovie(db *sql.DB, movie Movie) int {
 	return pk
 }
 func getMovie(db *sql.DB, pk int) {
+	// openDb()
+	// defer db.Close()
 	var name string
 	var director string
 	query := `SELECT name, director FROM movie WHERE id = $1`

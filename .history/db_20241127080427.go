@@ -15,18 +15,19 @@ type Movie struct {
 
 func openDb() *sql.DB {
 
-	connStr := "postgresql://theansweris4ty2:5f2VrRrbbPozGkDMkruV6NNcUfx6fTn8@dpg-ct37s5i3esus73f31t3g-a.oregon-postgres.render.com/neondreamsdb"
-	db, err := sql.Open("postgres", connStr)
-	if err != nil {
-		fmt.Printf("there was an error %v", err)
-	}
-	err = db.Ping()
-	if err != nil {
-		fmt.Printf("There was an error: %v", err)
-	}
-	fmt.Println("Successfully connected to db")
-	return db
-}
+	// connStr := "postgresql://theansweris4ty2:5f2VrRrbbPozGkDMkruV6NNcUfx6fTn8@dpg-ct37s5i3esus73f31t3g-a.oregon-postgres.render.com/neondreamsdb"
+	// db, err := sql.Open("postgres", connStr)
+	// if err != nil {
+	// 	fmt.Printf("there was an error %v", err)
+	// }
+	// defer db.Close()
+	// err = db.Ping()
+	// if err != nil {
+	// 	fmt.Printf("There was an error: %v", err)
+	// }
+	// fmt.Println("Successfully connected to db")
+	// return db
+// }
 
 func createMovieTable(db *sql.DB) {
 	query := `CREATE TABLE IF NOT EXISTS movie(
