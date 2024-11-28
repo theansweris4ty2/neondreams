@@ -45,19 +45,6 @@ func createBookTable(db *sql.DB) {
 		log.Fatal(err)
 	}
 }
-func createMovieTable(db *sql.DB) {
-	query := `CREATE TABLE IF NOT EXISTS movie(
-	id SERIAL PRIMARY KEY,
-	Name VARCHAR(100) NOT NULL,
-	Director VARCHAR(100) NOT NULL, 
-	created timestamp DEFAULT NOW()
-	)`
-	_, err := db.Exec(query)
-	if err != nil {
-		fmt.Println("error creating table")
-		log.Fatal(err)
-	}
-}
 func insertBook(db *sql.DB, book Book) int {
 	query := `INSERT INTO book (title, author)
 	VALUES($1, $2) RETURNING id`
@@ -140,14 +127,4 @@ func getBook(db *sql.DB, pk int) (string, string) {
 		log.Fatal(err)
 	}
 	return title, author
-}
-func getMovie(db *sql.DB, pk int) (string, string) {
-	var title string
-	var director string
-	query := `SELECT name, director FROM movie WHERE id = $1`
-	err := db.QueryRow(query, pk).Scan(&title, &director)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return title, director
 }

@@ -17,8 +17,7 @@ func main() {
 	http.HandleFunc("/add-movie", movieformHandler)
 	http.HandleFunc("/books/", booksHandler)
 	http.HandleFunc("/movies/", moviesHandler)
-	http.HandleFunc("/book-list/", booklistHandler)
-	http.HandleFunc("/movie-list/", movielistHandler)
+	http.HandleFunc("/movie-list/", listHandler)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
 	http.ListenAndServe(":8080", nil)
 
@@ -59,7 +58,7 @@ func booksHandler(w http.ResponseWriter, r *http.Request) {
 func moviesHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "movies.html", nil)
 }
-func booklistHandler(w http.ResponseWriter, r *http.Request) {
+func listHandler(w http.ResponseWriter, r *http.Request) {
 	db := openDb()
 	defer db.Close()
 	books, _ := getAllBooks(db)
@@ -71,20 +70,6 @@ func booklistHandler(w http.ResponseWriter, r *http.Request) {
 		{{end}}
 	    </ul>,`)
 	tpl.Execute(w, books)
-
-}
-func movielistHandler(w http.ResponseWriter, r *http.Request) {
-	db := openDb()
-	defer db.Close()
-	movies, _ := getAllMovies(db)
-
-	tpl, _ := template.New("t").Parse(`
-		<ul>
-		{{range .}}	
-	<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Director}}</li>
-		{{end}}
-	    </ul>,`)
-	tpl.Execute(w, movies)
 
 }
 func bookHandler(w http.ResponseWriter, r *http.Request) {

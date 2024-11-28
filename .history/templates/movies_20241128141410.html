@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Books</title>
+    <title>Movies</title>
     <script src="https://unpkg.com/htmx.org@2.0.3"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-600 content-center">
-    {{template "header2"}}
+    {{template "header3"}}
     <div class="grid grid-cols-2 p-6">
         <div class="inline-block w-full rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white">
-        <ul  id= "book-list"class="max-w-md divide-y divide-gray-200 dark:divide-black">
+        <ul  id="movie-list" class="max-w-md divide-y divide-gray-200 dark:divide-black">
         </ul>
         </div>
         <div>
-            {{template "bookform"}}
+            {{template "movieform"}}
         </div>
     </div>
     {{template "footer"}}   
