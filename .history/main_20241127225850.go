@@ -43,15 +43,16 @@ func booksHandler(w http.ResponseWriter, r *http.Request) {
 func listHandler(w http.ResponseWriter, r *http.Request) {
 	db := openDb()
 	defer db.Close()
-	books, _ := getAllBooks(db)
-
-	tpl, _ := template.New("t").Parse(`
-		<ul>
-		{{range .}}	
-	<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Author}}</li>
-		{{end}}
-	    </ul>,`)
-	tpl.Execute(w, books)
+	var books []Book
+	books, _ = getAllBooks(db)
+	for _, b := range books {
+		fmt.Printf("The title is %s", b.Title)
+	}
+	// tpl, _ := template.New("t").Parse(`
+	// 	<li>{{.Title}} - {{.Author}}</li>
+	// 	{{end}}
+	//     </ul>,`)
+	// tpl.Execute(w, books)
 
 }
 func bookHandler(w http.ResponseWriter, r *http.Request) {

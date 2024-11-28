@@ -1,7 +1,7 @@
 {{define "filmform"}}
 <div
   class="mx-auto block max-w-md rounded-lg bg-gray-800 p-6 shadow-4 dark:bg-surface-dark">
-  <form hx-post="/add-book/" hx-target="#book-list" hx-swap="beforeend" hx-on::after-request="this.reset()">
+  <form hx-post="/add-film/" hx-target="#film-list" hx-swap="beforeend" hx-on::after-request="this.reset()">
     <div class="grid grid-cols-2 gap-4">
       <div class="relative mb-6" data-twe-input-wrapper-init>
         <label
@@ -16,7 +16,7 @@
       <div class="relative mb-6" data-twe-input-wrapper-init>
         <label
         class="block text-white text-sm font-bold mb-2" for="director"
-        >Author
+        >Director
       </label>
         <input
           type="text" name="author"

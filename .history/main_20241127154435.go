@@ -14,8 +14,8 @@ func main() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/add-book/", formHandler)
-	http.HandleFunc("/book-list/", booksHandler)
-	http.HandleFunc("/list/", listHandler)
+	http.HandleFunc("/film-list/", filmsHandler)
+	http.HandleFunc("/list/", http.HandlerFunc(listHandler))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
 	http.ListenAndServe(":8080", nil)
 
@@ -37,29 +37,20 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	getBook(db, pk)
 }
 
-func booksHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "books.html", nil)
+func filmsHandler(w http.ResponseWriter, r *http.Request) {
+	tpl.ExecuteTemplate(w, "films.html", nil)
 }
 func listHandler(w http.ResponseWriter, r *http.Request) {
 	db := openDb()
 	defer db.Close()
-	books, _ := getAllBooks(db)
-
+	var books []Book
+	books, _ = getAllBooks(db)
 	tpl, _ := template.New("t").Parse(`
 		<ul>
-		{{range .}}	
-	<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Author}}</li>
+		{{range .}}
+		<li>{{.Title}} - {{.Author}}</li>
 		{{end}}
-	    </ul>,`)
+        </ul>,`)
 	tpl.Execute(w, books)
 
-}
-func bookHandler(w http.ResponseWriter, r *http.Request) {
-	db := openDb()
-	defer db.Close()
-	title, author := getBook(db, 1)
-	htmlStr := fmt.Sprintf("<ul><li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> %s - %s</li></ul>", title, author)
-	tpl, _ := template.New("t").Parse(htmlStr)
-
-	tpl.Execute(w, nil)
 }

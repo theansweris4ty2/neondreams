@@ -79,14 +79,16 @@ func getAllBooks(db *sql.DB) ([]Book, error) {
 			return books, err
 		}
 	}
-
+	for _, b := range books {
+		fmt.Printf("The title of the book is %s", b.Title)
+	}
 	return books, nil
 }
 
 func getBook(db *sql.DB, pk int) (string, string) {
 	var title string
 	var author string
-	query := `SELECT title, author FROM book WHERE id = $1`
+	query := `SELECT name, director FROM book WHERE id = $1`
 	err := db.QueryRow(query, pk).Scan(&title, &author)
 	if err != nil {
 		log.Fatal(err)

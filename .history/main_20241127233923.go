@@ -48,7 +48,7 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 	tpl, _ := template.New("t").Parse(`
 		<ul>
 		{{range .}}	
-	<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Author}}</li>
+	<li>{{.Title}} - {{.Author}}</li>
 		{{end}}
 	    </ul>,`)
 	tpl.Execute(w, books)

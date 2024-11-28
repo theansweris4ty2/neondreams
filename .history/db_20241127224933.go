@@ -58,7 +58,7 @@ func insertBook(db *sql.DB, book Book) int {
 }
 func getAllBooks(db *sql.DB) ([]Book, error) {
 	var books []Book
-	rows, err := db.Query("SELECT title, author FROM book")
+	rows, err := db.Query("SELECT * FROM book")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -67,26 +67,27 @@ func getAllBooks(db *sql.DB) ([]Book, error) {
 	for rows.Next() {
 		var title string
 		var author string
+		book := Book{}
 		err := rows.Scan(&title, &author)
 		if err != nil {
 			return books, err
 		}
-		fmt.Println("\n", title, author)
-		book := Book{title, author}
+		book = Book{title, author}
 		books = append(books, book)
-
-		if err = rows.Err(); err != nil {
-			return books, err
-		}
 	}
-
+	if err = rows.Err(); err != nil {
+		return books, err
+	}
+	for _, b := range books {
+		fmt.Printf("The title of this book is %s", b.Title)
+	}
 	return books, nil
 }
 
 func getBook(db *sql.DB, pk int) (string, string) {
 	var title string
 	var author string
-	query := `SELECT title, author FROM book WHERE id = $1`
+	query := `SELECT name, director FROM book WHERE id = $1`
 	err := db.QueryRow(query, pk).Scan(&title, &author)
 	if err != nil {
 		log.Fatal(err)
