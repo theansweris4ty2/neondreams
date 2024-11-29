@@ -14,7 +14,7 @@ func main() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/add-book/", bookformHandler)
-	http.HandleFunc("/add-movie/", movieformHandler)
+	http.HandleFunc("/add-movie", movieformHandler)
 	http.HandleFunc("/books/", booksHandler)
 	http.HandleFunc("/movies/", moviesHandler)
 	http.HandleFunc("/articles/", articlesHandler)

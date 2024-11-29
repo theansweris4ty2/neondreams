@@ -14,10 +14,10 @@ func main() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/add-book/", bookformHandler)
-	http.HandleFunc("/add-movie/", movieformHandler)
+	http.HandleFunc("/add-movie", movieformHandler)
 	http.HandleFunc("/books/", booksHandler)
 	http.HandleFunc("/movies/", moviesHandler)
-	http.HandleFunc("/articles/", articlesHandler)
+	http.HandleFunc("/blog/", blogHandler)
 	http.HandleFunc("/book-list/", booklistHandler)
 	http.HandleFunc("/movie-list/", movielistHandler)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
@@ -27,8 +27,8 @@ func main() {
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "home.html", nil)
 }
-func articlesHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "articles.html", nil)
+func blogHandler(w http.ResponseWriter, r *http.Request) {
+	tpl.ExecuteTemplate(w, "blog.html", nil)
 }
 func bookformHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.PostFormValue("title")
