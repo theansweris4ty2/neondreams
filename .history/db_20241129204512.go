@@ -137,7 +137,7 @@ func getAllMovies(db *sql.DB) ([]Movie, error) {
 }
 func getAllArticles(db *sql.DB) ([]Article, error) {
 	var articles []Article
-	rows, err := db.Query("SELECT title, author, blog FROM articles")
+	rows, err := db.Query("SELECT name, director FROM movie")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -162,34 +162,23 @@ func getAllArticles(db *sql.DB) ([]Article, error) {
 	return articles, nil
 }
 
-func getBook(db *sql.DB, t string) (string, string) {
+func getBook(db *sql.DB, pk int) (string, string) {
 	var title string
 	var author string
-	query := `SELECT title, author FROM book WHERE title = $1`
-	err := db.QueryRow(query, t).Scan(&title, &author)
+	query := `SELECT title, author FROM book WHERE id = $1`
+	err := db.QueryRow(query, pk).Scan(&title, &author)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return title, author
 }
-func getMovie(db *sql.DB, t string) (string, string) {
+func getMovie(db *sql.DB, pk int) (string, string) {
 	var title string
 	var director string
-	query := `SELECT name, director FROM movie WHERE name = $1`
-	err := db.QueryRow(query, t).Scan(&title, &director)
+	query := `SELECT name, director FROM movie WHERE id = $1`
+	err := db.QueryRow(query, pk).Scan(&title, &director)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return title, director
-}
-func getArticle(db *sql.DB, t string) (string, string, string) {
-	var title string
-	var author string
-	var blog string
-	query := `SELECT title, author, blog FROM articles WHERE title = $1`
-	err := db.QueryRow(query, t).Scan(&title, &author, &blog)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return title, author, blog
 }

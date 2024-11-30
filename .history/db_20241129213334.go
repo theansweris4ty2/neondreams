@@ -175,7 +175,7 @@ func getBook(db *sql.DB, t string) (string, string) {
 func getMovie(db *sql.DB, t string) (string, string) {
 	var title string
 	var director string
-	query := `SELECT name, director FROM movie WHERE name = $1`
+	query := `SELECT name, director FROM movie WHERE title = $1`
 	err := db.QueryRow(query, t).Scan(&title, &director)
 	if err != nil {
 		log.Fatal(err)

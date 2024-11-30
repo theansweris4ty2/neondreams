@@ -34,25 +34,27 @@ func articlesHandler(w http.ResponseWriter, r *http.Request) {
 }
 func selectBookHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.PostFormValue("title")
-	// author := r.PostFormValue("author")
-	db := openDb()
-	defer db.Close()
-	t, a := getBook(db, title)
-	htmlStr := fmt.Sprintf("<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> %s - %s</li>", t, a)
+	author := r.PostFormValue("author")
+	htmlStr := fmt.Sprintf("<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> %s - %s</li>", title, author)
 	tpl, _ := template.New("t").Parse(htmlStr)
 	tpl.Execute(w, nil)
-
+	db := openDb()
+	defer db.Close()
+	var newBook = Book{title, author}
+	getBook(db, pk)
 }
 func selectMovieHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.PostFormValue("title")
-	// director := r.PostFormValue("director")
-	db := openDb()
-	defer db.Close()
-	t, d := getMovie(db, title)
-	htmlStr := fmt.Sprintf("<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> %s - %s</li>", t, d)
+	director := r.PostFormValue("director")
+	htmlStr := fmt.Sprintf("<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> %s - %s</li>", title, director)
 	tpl, _ := template.New("t").Parse(htmlStr)
 	tpl.Execute(w, nil)
-
+	db := openDb()
+	defer db.Close()
+	var newMovie = Movie{title, director}
+	createMovieTable(db)
+	pk := insertMovie(db, newMovie)
+	getMovie(db, pk)
 }
 func selectArticleHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.PostFormValue("title")
@@ -64,6 +66,7 @@ func selectArticleHandler(w http.ResponseWriter, r *http.Request) {
 	htmlStr := fmt.Sprintf("<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> %s - %s <p>%s</p></li>", t, a, b)
 	tpl, _ := template.New("t").Parse(htmlStr)
 	tpl.Execute(w, nil)
+
 }
 
 func booksHandler(w http.ResponseWriter, r *http.Request) {
