@@ -11,12 +11,16 @@
     {{template "header4"}}
     <div id="article-box"class="grid grid-cols-2 p-6">
         <div class="inline-block w-full rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white m-5">
-            <u id="article-list">
+            <!-- <u id="article-list">
 
-            </u>
+            </u> -->
+        <div id="article-list class="max-w-lg divide-y divide-gray-200 dark:divide-black">
+
+        </div>
+        </div>
+        <div>
+            {{template "articlesform"}}
+        </div>
     </div>
-    {{template "articlesform"}}
-    </div>
-        
 </body>
 </html>

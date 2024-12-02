@@ -41,6 +41,7 @@ func selectBookHandler(w http.ResponseWriter, r *http.Request) {
 	htmlStr := fmt.Sprintf("<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> %s - %s</li>", t, a)
 	tpl, _ := template.New("t").Parse(htmlStr)
 	tpl.Execute(w, nil)
+
 }
 func selectMovieHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.PostFormValue("title")
@@ -59,9 +60,8 @@ func selectArticleHandler(w http.ResponseWriter, r *http.Request) {
 	db := openDb()
 	defer db.Close()
 	_, _, b := getArticle(db, title)
-	// TODO change the getArticle field to id from title
-	htmlStr := fmt.Sprintf(`<div class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> <p>%s</p>
-	</div>`, b)
+
+	htmlStr := fmt.Sprintf("<div class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'> <p>%s</p></div>", b)
 	tpl, _ := template.New("t").Parse(htmlStr)
 	tpl.Execute(w, nil)
 }
@@ -81,7 +81,6 @@ func booklistHandler(w http.ResponseWriter, r *http.Request) {
 		{{range .}}	
 	<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Author}}</li>
 		{{end}}`)
-	// TODO add id value
 	tpl.Execute(w, books)
 
 }
@@ -101,7 +100,7 @@ func articlelistHandler(w http.ResponseWriter, r *http.Request) {
 	db := openDb()
 	defer db.Close()
 	articles, _ := getAllArticles(db)
-	// TODO Change this back to the same form format as the other pages, but have input field for id rather than title or author
+
 	tpl, _ := template.New("t").Parse(`
 		{{range .}}
 	<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-px max-w-screen-sm'>{{.Title}} - {{.Author}}<form hx-post="/article/" hx-target="#article-list" hx-swap="innerHTML"><input type="hidden" name="title" value={{.Title}}> <button type="submit"
