@@ -133,8 +133,7 @@ func showlistHandler(w http.ResponseWriter, r *http.Request) {
 
 	tpl, _ := template.New("t").Parse(`
 		{{range .}}	
-	<li class='inline-block w-full rounded bg-purple-900 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'><form hx-post="/select-show/" hx-target="#show-list" hx-swap="innerHTML"><input type="hidden" name="title" value={{.Title}}> <button type="submit"
-	class="inline-block w-full rounded bg-purple-900 m-1 px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-primary-3">{{.Title}} - {{.Genre}}</button></form></li>
+	<li class='inline-block w-full rounded bg-purple-900 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Genre}}</li>
 		{{end}}`)
 	tpl.Execute(w, shows)
 

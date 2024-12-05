@@ -228,7 +228,7 @@ func getShow(db *sql.DB, t string) (string, string) {
 	var title string
 	var genre string
 	query := `SELECT title, genre FROM shows WHERE title = $1`
-	err := db.QueryRow(query, t).Scan(&title, &genre)
+	err := db.QueryRow(query, t).Scan(&title)
 	if err != nil {
 		log.Fatal(err)
 	}
