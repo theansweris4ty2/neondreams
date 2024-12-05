@@ -9,7 +9,6 @@ import (
 )
 
 // TODO Add genre field to all structs and a review field to Movie, Book, and TV
-
 type Movie struct {
 	Title    string
 	Director string
@@ -18,7 +17,7 @@ type Book struct {
 	Title  string
 	Author string
 }
-type Show struct {
+type TV struct {
 	Title string
 	Genre string
 }
@@ -167,9 +166,9 @@ func getAllArticles(db *sql.DB) ([]Article, error) {
 
 	return articles, nil
 }
-func getAllShows(db *sql.DB) ([]Show, error) {
-	var shows []Show
-	rows, err := db.Query("SELECT title, genre FROM shows")
+func getAllArticles(db *sql.DB) ([]Article, error) {
+	var articles []Article
+	rows, err := db.Query("SELECT title, author, blog FROM articles")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -177,13 +176,12 @@ func getAllShows(db *sql.DB) ([]Show, error) {
 
 	for rows.Next() {
 		var title string
-		var genre string
-		err := rows.Scan(&title, &genre)
+		err := rows.Scan(&title)
 		if err != nil {
 			return shows, err
 		}
-		show := Show{title, genre}
-		shows = append(shows, show)
+		article := Article{title, author, blog}
+		shows = append(articles, article)
 
 		if err = rows.Err(); err != nil {
 			return shows, err
@@ -224,13 +222,12 @@ func getArticle(db *sql.DB, t string) (string, string, string) {
 	}
 	return title, author, blog
 }
-func getShow(db *sql.DB, t string) (string, string) {
+func getShow(db *sql.DB, t string) string {
 	var title string
-	var genre string
-	query := `SELECT title, genre FROM show WHERE title = $1`
+	query := `SELECT title FROM show WHERE title = $1`
 	err := db.QueryRow(query, t).Scan(&title)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return title, genre
+	return title
 }

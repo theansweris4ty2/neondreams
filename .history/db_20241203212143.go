@@ -9,7 +9,6 @@ import (
 )
 
 // TODO Add genre field to all structs and a review field to Movie, Book, and TV
-
 type Movie struct {
 	Title    string
 	Director string

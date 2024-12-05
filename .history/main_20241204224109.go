@@ -93,7 +93,7 @@ func booklistHandler(w http.ResponseWriter, r *http.Request) {
 
 	tpl, _ := template.New("t").Parse(`
 		{{range .}}	
-	<li class='inline-block w-full rounded bg-orange-600 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Author}}</li>
+	<li class='inline-block w-full rounded bg-pink-700 px-6 pb-2.5 pt-2.5 text-lg font-large uppercase leading-normal text-white m-2'>{{.Title}} - {{.Author}}</li>
 		{{end}}`)
 	// TODO add id value
 	tpl.Execute(w, books)
